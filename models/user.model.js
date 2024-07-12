@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { Schema, model } from "mongoose";
-import bcrypt from "bcryptjs"; // Dependency for password hashing
+
 
 const userSchema = new Schema({
   name: {
