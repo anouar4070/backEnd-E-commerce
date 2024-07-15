@@ -1,12 +1,13 @@
 import { CategoryModel } from "../../../models/category.model.js";
+import slugify from "slugify";
 
 const createCategory = async (req, res, next) => {
   let { name } = req.body;
   // await CategoryModel.insertMany({name, slug: name})
   // await CategoryModel.create({name, slug: name})
-  let results = new CategoryModel({ name, slug: name });
-  await results.save();
-  res.status(201).json({ message: "added" });
+  let results = new CategoryModel({ name, slug:slugify(name) });
+  let added = await results.save();
+  res.status(201).json({ message: "added" , added});
 };
 
 const getAllCategories = async (req, res, next) => {
@@ -25,7 +26,7 @@ const updateCategory = async (req, res, next) => {
   let { name } = req.body;
   let results = await CategoryModel.findByIdAndUpdate(
     id,
-    { name, slug: name },
+    { name, slug:slugify(name)},
     { new: true }
   );
   res.json({ message: "Done", results });
