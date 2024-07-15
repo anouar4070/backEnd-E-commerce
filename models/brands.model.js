@@ -6,19 +6,12 @@ const brandSchema = new Schema({
     type: String,
     required: [true, "Le nom de la marque est obligatoire"],
     trim: true,
-    maxlength: [50, "Le nom de la marque ne doit pas dépasser 50 caractères"], // 
+    minlength: [3, "Brand name too short"],  
     unique: true, 
   },
-  logo: {
-    type: String,
-    trim: true,
-  },
-  slug: {
-    type: String,
-    unique: true, 
-    lowercase: true, 
-    index: true, 
-  },
+  logo: String,
+   
+
 }, { timestamps: true }); 
 
-export const BrandModel = mongoose.model("Brand", brandSchema);
+export const BrandModel = mongoose.model("brand", brandSchema);

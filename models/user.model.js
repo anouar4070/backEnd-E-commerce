@@ -14,20 +14,21 @@ const userSchema = new Schema({
     required: [true, "L'e-mail est obligatoire"],
     trim: true,
     unique: true,
+    minlength: 1,
   },
   password: {
     type: String,
     required: [true, "Le mot de passe est obligatoire"],
     minlength: [6, "Le mot de passe doit contenir au moins 6 caractères"],
-    select: false, // Exclude password from user object retrieval
+    
   },
   verified: {
     type: Boolean,
     default: false,
   },
-  blocked: {
+  isActive: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   role: {
     type: String,
@@ -38,4 +39,4 @@ const userSchema = new Schema({
 
 
 
-export const UserModel = mongoose.model("User", userSchema);
+export const UserModel = mongoose.model("user", userSchema);

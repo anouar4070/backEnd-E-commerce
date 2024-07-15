@@ -7,7 +7,7 @@ const productSchema = new Schema(
       type: String,
       required: [true, "Le titre du produit est obligatoire"],
       trim: true,
-      maxlength: [100, "Le titre du produit ne doit pas dépasser 100 caractères"], 
+      minlength: [3, "name too short"], 
     },
     imgCover: {
       type: String,
@@ -34,11 +34,11 @@ const productSchema = new Schema(
     },
     discount: { 
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Discount", 
+      ref: "discount", 
     },
     categoryId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      ref: "category",
       required: [true, "La catégorie du produit est obligatoire"],
     },
     subcategoryId: {
@@ -47,14 +47,14 @@ const productSchema = new Schema(
     },
     brandId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Brand",
+      ref: "brand",
       required: [true, "La marque du produit est obligatoire"],
     },
     slug: {
       type: String,
       unique: true, 
       lowercase: true, // Convert slug to lowercase for consistency
-      index: true, 
+     
     },
     ratingAvg: {
       type: Number,

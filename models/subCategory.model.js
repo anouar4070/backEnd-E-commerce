@@ -6,19 +6,31 @@ const subCategorySchema = new Schema({
     type: String,
     required: [true, "Le nom de la sous-catégorie est obligatoire"],
     trim: true,
-    maxlength: [50, "Le nom de la sous-catégorie ne doit pas dépasser 50 caractères"], 
+    minLength: [2, "category name too short"], 
   },
   slug: {
     type: String,
     unique: true, 
     lowercase: true, 
-    index: true, 
+    
   },
-  categoryId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Category", 
-    required: true,
+  category: {
+    type: mongoose.Types.ObjectId,
+    ref: "category", 
+    
   },
 }, { timestamps: true });
 
-export const SubCategoryModel = mongoose.model("SubCategory", subCategorySchema);
+export const subCategoryModel = mongoose.model("subCategory", subCategorySchema);
+
+
+// subCategory = {
+// name: "samsung",
+// slug: "samsung",
+// category: {
+//   _id: "155663322114gg200",
+//   name: "brand",
+//   slug: "brand",
+//  },
+
+// }
