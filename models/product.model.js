@@ -5,13 +5,14 @@ const productSchema = new Schema(
   {
     title: {
       type: String,
-      required: [true, "Le titre du produit est obligatoire"],
+      unique: true,
+      required: [true, "you must enter title"],
       trim: true,
-      minlength: [3, "name too short"], 
+      minlength: [3, "too short product title"], 
     },
     imgCover: {
       type: String,
-      required: [true, "L'image de couverture du produit est obligatoire"],
+      required: [true, "you must enter cover image"],
       trim: true,
     },
     images: {
@@ -20,13 +21,13 @@ const productSchema = new Schema(
     },
     description: {
       type: String,
-      required: [true, "La description du produit est obligatoire"],
+      required: [true, "you must enter description"],
       trim: true,
     },
     price: {
       type: Number,
-      required: [true, "Le prix du produit est obligatoire"],
-      min: [0, "Le prix du produit ne peut pas être négatif"],
+      required: [true, "you must enter price"],
+      min: [0, "the price can't be negative"],
     },
     priceAfterDiscount: {
       type: Number,
@@ -39,16 +40,17 @@ const productSchema = new Schema(
     categoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "category",
-      required: [true, "La catégorie du produit est obligatoire"],
+      required: [true, "you must enter category"],
     },
     subcategoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "SubCategory",
+      required: true,
     },
     brandId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "brand",
-      required: [true, "La marque du produit est obligatoire"],
+      required: [true, "you must enter brand"],
     },
     slug: {
       type: String,
@@ -70,8 +72,8 @@ const productSchema = new Schema(
     },
     stock: {
       type: Number,
-      required: [true, "Le stock du produit est obligatoire"],
-      min: [0, "Le stock du produit ne peut pas être négatif"],
+      required: [true, "you must enter stock"],
+      min: [0, "stock can't be negative number"],
     },
     soldItem: {
       type: Number,

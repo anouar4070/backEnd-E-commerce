@@ -4,9 +4,9 @@ import { Schema, model } from "mongoose";
 const subCategorySchema = new Schema({
   name: {
     type: String,
-    required: [true, "Le nom de la sous-catégorie est obligatoire"],
+    required: [true, "you must enter subCategory name"],
     trim: true,
-    minLength: [2, "category name too short"], 
+    minLength: [2, "subCategory name too short"], 
   },
   slug: {
     type: String,
@@ -16,6 +16,7 @@ const subCategorySchema = new Schema({
   },
   category: {
     type: mongoose.Types.ObjectId,
+    required: true,
     ref: "category", 
     
   },

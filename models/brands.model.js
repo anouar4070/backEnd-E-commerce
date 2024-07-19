@@ -4,12 +4,19 @@ import { Schema, model } from "mongoose";
 const brandSchema = new Schema({
   name: {
     type: String,
-    required: [true, "Le nom de la marque est obligatoire"],
+    required: [true, "you must enter brand name"],
     trim: true,
     minlength: [3, "Brand name too short"],  
     unique: true, 
   },
-  logo: String,
+  slug:{
+type: String,
+lowercase: true,
+  },
+  logo: {
+    type: String,
+   
+      } 
    
 
 }, { timestamps: true }); 

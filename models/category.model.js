@@ -5,9 +5,9 @@ const categorySchema = new Schema(
   {
     name: {
       type: String,
-      required: [true, "Le nom de la catégorie est obligatoire"],
+      required: [true, "you must enter category name"],
       trim: true,
-      minLength: [2, "category name too short"],
+      minLength: [2, "too short category name "],
       unique: true,
     },
     slug: {
@@ -21,4 +21,4 @@ const categorySchema = new Schema(
   { timestamps: true }
 ); // Add timestamps for automatic creation/update tracking
 
-export const CategoryModel = mongoose.model("category", categorySchema);
+export const CategoryModel = model("category", categorySchema);
