@@ -26,6 +26,8 @@ app.all("*", (req, res, next) => {
   
 }
 )
+
+//& global error handling
 app.use((err, req, res, next) => {
   console.log(err)
   res.status(err.statusCode).json(err.message)
@@ -37,6 +39,8 @@ dbConnection();
 app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
+
+//& ensure that unprocessed promise rejections are captured
 process.on('unhandledRejection', (err) => {
   console.log(err)
 }
