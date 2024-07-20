@@ -1,42 +1,47 @@
 import mongoose from "mongoose";
 import { Schema, model } from "mongoose";
 
+const userSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "you must enter user name"],
+      lowercase: true,
+      trim: true,
+      maxlength: [50, "the name should have maximum 50 char"],
+    },
+    email: {
+      type: String,
+      required: [true, "e-mail is required"],
+      trim: true,
+      unique: true,
+      minlength: 1,
+    },
+    password: {
+      type: String,
+      required: [true, "password required"],
+      minlength: [6, "min 6 character password"],
+    },
+    phone: {
+      type: String,
+      required: [true, "phone number is required"],
+    },
 
-const userSchema = new Schema({
-  name: {
-    type: String,
-    required: [true, "Le nom est obligatoire"],
-    trim: true,
-    maxlength: [50, "Le nom ne doit pas dépasser 50 caractères"],
+    verified: {
+      type: Boolean,
+      default: false,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"], // Allowed roles
+      default: "user",
+    },
   },
-  email: {
-    type: String,
-    required: [true, "L'e-mail est obligatoire"],
-    trim: true,
-    unique: true,
-    minlength: 1,
-  },
-  password: {
-    type: String,
-    required: [true, "Le mot de passe est obligatoire"],
-    minlength: [6, "Le mot de passe doit contenir au moins 6 caractères"],
-    
-  },
-  verified: {
-    type: Boolean,
-    default: false,
-  },
-  isActive: {
-    type: Boolean,
-    default: true,
-  },
-  role: {
-    type: String,
-    enum: ["user", "admin"], // Allowed roles
-    default: "user",
-  },
-}, { timestamps: true });
-
-
+  { timestamps: true }
+);
 
 export const UserModel = mongoose.model("user", userSchema);

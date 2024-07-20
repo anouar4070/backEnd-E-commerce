@@ -15,7 +15,7 @@ app.use(morgan('dev'))
 app.use("/api/v1/category", categoryRouter )
 
 
-//Route not found:
+//& Route not found:
 app.all("*", (req, res, next) => {
   // res.json({message: `can't find this route:${req.originalUrl}`})
   next(new AppError(`can't find this route:${req.originalUrl}`, 404))

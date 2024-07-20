@@ -42,7 +42,7 @@ const updateCategory = catchAsyncError(async (req, res, next) => {
   // res.json({ message: "Done", results });
   
   !results && next(new AppError("category not found", 404))
-  results && res.json({ message: "Deleted" });
+  results && res.json({ message: "Done", results });
 
 });
 
