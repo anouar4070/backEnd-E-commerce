@@ -1,14 +1,12 @@
-import { BrandModel } from "../../../models/brands.model.js";
+
+
 import slugify from "slugify";
 import AppError from "../../utils/AppError.js";
+import { BrandModel } from "../../../models/brands.model.js";
+import deleteOne from "../../utils/handlers/refactor.handler.js";
+import { catchAsyncError } from "../../middleware/catchAsyncError.js";
 
-const catchAsyncError = (fn) => {
-  return (req, res, next) => {
-    fn(req, res, next).catch(err => {
-      next(err);
-    });
-  };
-};
+
 
 const createBrand = catchAsyncError(async (req, res, next) => {
   let { name } = req.body;
@@ -26,7 +24,7 @@ const getBrandById = catchAsyncError(async (req, res, next) => {
   let { id } = req.params;
   let results = await BrandModel.findById(id);
   if (results) return res.json({ message: "Done", results });
-  res.json({ message: "Brand doesn't exist" });
+  res.json({ message: "brand doesn't exist" });
 });
 
 const updateBrand = catchAsyncError(async (req, res, next) => {
@@ -37,23 +35,19 @@ const updateBrand = catchAsyncError(async (req, res, next) => {
     { name, slug: slugify(name) },
     { new: true }
   );
-
-  !results && next(new AppError("Brand not found", 404));
+  // res.json({ message: "Done", results });
+  
+  !results && next(new AppError("brand not found", 404))
   results && res.json({ message: "Done", results });
+
 });
 
-const deleteBrand = catchAsyncError(async (req, res, next) => {
-  let { id } = req.params;
-  let results = await BrandModel.findByIdAndDelete(id);
-  !results && res.status(404).json({ message: "Brand not found" });
-
-  results && res.json({ message: "Deleted" });
-});
+const deleteBrand = deleteOne(BrandModel)
 
 export {
   getAllBrands,
   createBrand,
   getBrandById,
   updateBrand,
-  deleteBrand,
+  deleteBrand, 
 };

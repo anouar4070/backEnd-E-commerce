@@ -1,40 +1,49 @@
 import { subCategoryModel } from "../../../models/subCategory.model.js";
 import slugify from "slugify";
 import AppError from "../../utils/AppError.js";
+import { catchAsyncError } from "../../middleware/catchAsyncError.js";
+import deleteOne from "../../utils/handlers/refactor.handler.js";
 
-const catchAsyncError = (fn) => {
-  return (req, res, next) => {
-    fn(req, res, next).catch(err => {
-      next(err);
-    });
-  };
-};
+
 
 const createSubCategory = catchAsyncError(async (req, res, next) => {
-  let { name, category } = req.body;
-  let results = new subCategoryModel({ name, slug: slugify(name), category });
+  let { name, categoryId } = req.body;
+  let results = new subCategoryModel({
+    name,
+    slug: slugify(name),
+    category: categoryId,
+  });
   let added = await results.save();
   res.status(201).json({ message: "Subcategory added", added });
 });
 
 const getAllSubCategories = catchAsyncError(async (req, res, next) => {
-  let results = await subCategoryModel.find({}).populate('category');
+  console.log("hello from get All subCategory", req.params);
+  let filters = {};
+  if (req.params && req.params.id) {
+    filters = {
+      category: req.params.id,
+    };
+  }
+
+  let results = await subCategoryModel.find(filters).populate("category");
+
   res.json({ message: "Done", results });
 });
 
 const getSubCategoryById = catchAsyncError(async (req, res, next) => {
   let { id } = req.params;
-  let results = await subCategoryModel.findById(id).populate('category');
+  let results = await subCategoryModel.findById(id).populate("category");
   if (results) return res.json({ message: "Done", results });
   res.json({ message: "Subcategory doesn't exist" });
 });
 
 const updateSubCategory = catchAsyncError(async (req, res, next) => {
   let { id } = req.params;
-  let { name, category } = req.body;
+  let { name, categoryId } = req.body;
   let results = await subCategoryModel.findByIdAndUpdate(
     id,
-    { name, slug: slugify(name), category },
+    { name, slug: slugify(name), category: categoryId },
     { new: true }
   );
 
@@ -42,13 +51,7 @@ const updateSubCategory = catchAsyncError(async (req, res, next) => {
   results && res.json({ message: "Done", results });
 });
 
-const deleteSubCategory = catchAsyncError(async (req, res, next) => {
-  let { id } = req.params;
-  let results = await subCategoryModel.findByIdAndDelete(id);
-  !results && res.status(404).json({ message: "Subcategory not found" });
-
-  results && res.json({ message: "Deleted" });
-});
+const deleteSubCategory = deleteOne(subCategoryModel)
 
 export {
   getAllSubCategories,

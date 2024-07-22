@@ -4,8 +4,9 @@ import dotenv from "dotenv";
 import categoryRouter from './src/modules/categories/categories.routes.js';
 import morgan from 'morgan';
 import AppError from './src/utils/AppError.js';
-import brandRouter from './src/modules/brand/brand.routes.js';
+import brandRouter from './src/modules/brands/brands.routes.js';
 import subCategoryRouter from './src/modules/subcategories/subcategory.routes.js';
+import productRouter from './src/modules/Product/product.routes.js';
 
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(morgan('dev'))
 app.use("/api/v1/category", categoryRouter )
 app.use("/api/v1/subcategory", subCategoryRouter )
 app.use("/api/v1/brand", brandRouter )
+app.use("/api/v1/product", productRouter )
 
 
 //* Route not found:

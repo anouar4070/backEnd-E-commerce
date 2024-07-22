@@ -1,20 +1,14 @@
 import express from "express";
-import {
-  getAllSubCategories,
-  createSubCategory,
-  getSubCategoryById,
-  updateSubCategory,
-  deleteSubCategory,
-} from "./subcategory.controller.js";
+import * as subCategoryController from "./subcategory.controller.js";
 
-const subCategoryRouter = express.Router();
+const subCategoryRouter = express.Router({mergeParams: true});
 
-subCategoryRouter.route("/").get(getAllSubCategories).post(createSubCategory);
+subCategoryRouter.route("/").get(subCategoryController.getAllSubCategories).post(subCategoryController.createSubCategory);
 
 subCategoryRouter
   .route("/:id")
-  .get(getSubCategoryById)
-  .patch(updateSubCategory)
-  .delete(deleteSubCategory);
+  .get(subCategoryController.getSubCategoryById)
+  .put(subCategoryController.updateSubCategory)
+  .delete(subCategoryController.deleteSubCategory);
 
 export default subCategoryRouter;
