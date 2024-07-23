@@ -10,18 +10,14 @@ const productSchema = new Schema(
       trim: true,
       minlength: [3, "too short product title"], 
     },
-    imgCover: {
-      type: String,
-      required: [true, "you must enter cover image"],
-      trim: true,
-    },
+    imgCover: String,
     images: {
       type: [String], // Array of image URLs
-      trim: true,
+      // trim: true,
     },
     description: {
       type: String,
-      required: [true, "you must enter description"],
+      // required: [true, "you must enter description"],
       trim: true,
     },
     price: {
@@ -31,51 +27,51 @@ const productSchema = new Schema(
     },
     priceAfterDiscount: {
       type: Number,
-      default: 0, 
+      min: 0, 
     },
-    discount: { 
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "discount", 
-    },
-    categoryId: {
-      type: mongoose.Schema.Types.ObjectId,
+    // discount: { 
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "discount", 
+    // },
+    category: {
+      type: mongoose.Types.ObjectId,
       ref: "category",
       required: [true, "you must enter category"],
     },
-    subcategoryId: {
-      type: mongoose.Schema.Types.ObjectId,
+    subCategory: {
+      type: mongoose.Types.ObjectId,
       ref: "SubCategory",
-      required: true,
+      // required: true,
     },
-    brandId: {
-      type: mongoose.Schema.Types.ObjectId,
+    brand: {
+      type: mongoose.Types.ObjectId,
       ref: "brand",
-      required: [true, "you must enter brand"],
+      // required: [true, "you must enter brand"],
     },
     slug: {
       type: String,
-      unique: true, 
+    required: true,
       lowercase: true, // Convert slug to lowercase for consistency
      
     },
     ratingAvg: {
       type: Number,
-      default: 0,
+      min: 1,
     },
     rateCount: {
       type: Number,
-      default: 0,
+      min: 1,
     },
-    createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User", 
-    },
-    stock: {
-      type: Number,
-      required: [true, "you must enter stock"],
-      min: [0, "stock can't be negative number"],
-    },
-    soldItem: {
+    // createdBy: {
+    //   type: mongoose.Types.ObjectId,
+    //   ref: "User", 
+    // },
+    // stock: {
+    //   type: Number,
+    //   required: [true, "you must enter stock"],
+    //   min: [0, "stock can't be negative number"],
+    // },
+    sold: {
       type: Number,
       default: 0,
     },

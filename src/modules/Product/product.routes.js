@@ -1,10 +1,10 @@
 import express from "express";
 import * as productController from "./product.controller.js.js";
-import subCategoryRouter from "../subcategories/subcategory.routes.js";
+
 
 const productRouter = express.Router();
 
-productRouter.use('/:id/subCategory', subCategoryRouter);
+
 
 productRouter.route("/")
   .get(productController.getAllProducts)
