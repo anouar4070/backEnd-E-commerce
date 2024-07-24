@@ -79,18 +79,11 @@ const productSchema = new Schema(
        required: [true, "you must enter brand"],
     },
    
-   
-    
     // createdBy: {
     //   type: mongoose.Types.ObjectId,
     //   ref: "User", 
     // },
-    // stock: {
-    //   type: Number,
-    //   required: [true, "you must enter stock"],
-    //   min: [0, "stock can't be negative number"],
-    // },
-    
+ 
   },
   { timestamps: true }
 );

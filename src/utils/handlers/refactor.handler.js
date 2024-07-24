@@ -6,9 +6,9 @@ const deleteOne = (model) => {
   return catchAsyncError(async (req, res, next) => {
     let { id } = req.params;
     let results = await model.findByIdAndDelete(id);
-    !results &&  next(new AppError( "brand not found", 404)) ;
+    !results &&  next(new AppError( " not found", 404)) ;
   
-    results && res.json({ message: "Brand deleted" });
+    results && res.json({ message: " deleted" });
   });
   
 }
