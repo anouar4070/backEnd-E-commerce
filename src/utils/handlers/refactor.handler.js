@@ -1,6 +1,6 @@
 
 import { catchAsyncError } from "../../middleware/catchAsyncError.js";
-
+ import AppError from "../AppError.js";
 
 const deleteOne = (model) => {
   return catchAsyncError(async (req, res, next) => {

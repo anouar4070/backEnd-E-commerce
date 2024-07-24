@@ -5,7 +5,7 @@ import deleteOne from "../../utils/handlers/refactor.handler.js";
 import { catchAsyncError } from "../../middleware/catchAsyncError.js";
 
 const createProduct = catchAsyncError(async (req, res, next) => {
-  req.body.slug = slugify(req.body.name);
+  req.body.slug = slugify(req.body.title);
   let results = new ProductModel(req.body);
   let added = await results.save();
   res.status(201).json({ message: "added", added });
@@ -25,11 +25,9 @@ const getProductById = catchAsyncError(async (req, res, next) => {
 
 const updateProduct = catchAsyncError(async (req, res, next) => {
   let { id } = req.params;
-  // let { name, price, description } = req.body;
-
-  let { name } = req.body;
-  if (req.body.name) {
-    req.body.slug = slugify(name);
+  let { title } = req.body;
+  if (req.body.title) {
+    req.body.slug = slugify(title);
   }
 
   let results = await ProductModel.findByIdAndUpdate(
