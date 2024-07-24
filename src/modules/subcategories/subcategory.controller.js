@@ -4,8 +4,6 @@ import AppError from "../../utils/AppError.js";
 import { catchAsyncError } from "../../middleware/catchAsyncError.js";
 import deleteOne from "../../utils/handlers/refactor.handler.js";
 
-
-
 const createSubCategory = catchAsyncError(async (req, res, next) => {
   let { name, categoryId } = req.body;
   let results = new subCategoryModel({
@@ -51,7 +49,7 @@ const updateSubCategory = catchAsyncError(async (req, res, next) => {
   results && res.json({ message: "Done", results });
 });
 
-const deleteSubCategory = deleteOne(subCategoryModel)
+const deleteSubCategory = deleteOne(subCategoryModel);
 
 export {
   getAllSubCategories,

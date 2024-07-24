@@ -6,7 +6,9 @@ const categoryRouter = express.Router()
 // categoryRouter.get("/", categoryController.getAllCategories )
 // categoryRouter.post("/", categoryController.createCategory ) 
 
-categoryRouter.use('/:id/subCategory', subCategoryRouter)
+categoryRouter.use('/:id/subCategory', subCategoryRouter
+  
+)
 
 categoryRouter.route("/")
 .get(categoryController.getAllCategories )
