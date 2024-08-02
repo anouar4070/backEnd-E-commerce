@@ -5,6 +5,7 @@ import AppError from "../../utils/AppError.js";
 import { BrandModel } from "../../../models/brands.model.js";
 import deleteOne from "../../utils/handlers/refactor.handler.js";
 import { catchAsyncError } from "../../middleware/catchAsyncError.js";
+import ApiFeatures from "../../utils/APIFeatures.js";
 
 
 
@@ -16,8 +17,15 @@ const createBrand = catchAsyncError(async (req, res, next) => {
 });
 
 const getAllBrands = catchAsyncError(async (req, res, next) => {
-  let results = await BrandModel.find({});
-  res.json({ message: "Done", results });
+  let apiFeature = new ApiFeatures(BrandModel.find(), req.query)
+  .pagination().sort().fields()
+
+  let results = await apiFeature.mongooseQuery;
+res.json({ message: "The all brands are:", page:apiFeature.page, results });
+
+
+  // let results = await BrandModel.find({});
+  // res.json({ message: "Done", results });
 });
 
 const getBrandById = catchAsyncError(async (req, res, next) => {

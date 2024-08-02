@@ -3,11 +3,13 @@ import slugify from "slugify";
 import AppError from "../../utils/AppError.js";
 import { catchAsyncError } from "../../middleware/catchAsyncError.js";
 import deleteOne from "../../utils/handlers/refactor.handler.js";
+import ApiFeatures from "../../utils/APIFeatures.js";
 
 
 
 const createCategory = catchAsyncError(async (req, res, next) => {
   let { name } = req.body;
+
   // await CategoryModel.insertMany({name, slug: name})
   // await CategoryModel.create({name, slug: name})
   let results = new CategoryModel({ name, slug: slugify(name) });
@@ -16,8 +18,14 @@ const createCategory = catchAsyncError(async (req, res, next) => {
 });
 
 const getAllCategories = catchAsyncError(async (req, res, next) => {
-  let results = await CategoryModel.find({});
-  res.json({ message: "Done", results });
+  let apiFeature = new ApiFeatures(CategoryModel.find(), req.query)
+  .pagination().sort().fields()
+
+  let results = await apiFeature.mongooseQuery;
+res.json({ message: "The all categories are:", page:apiFeature.page, results });
+
+  // let results = await CategoryModel.find({});
+  // res.json({ message: "Done", results });
 });
 
 const getCategoryById = catchAsyncError(async (req, res, next) => {

@@ -3,6 +3,8 @@ import AppError from "../../utils/AppError.js";
 import { ProductModel } from "../../../models/product.model.js";
 import deleteOne from "../../utils/handlers/refactor.handler.js";
 import { catchAsyncError } from "../../middleware/catchAsyncError.js";
+import ApiFeatures from "../../utils/APIFeatures.js";
+
 
 const createProduct = catchAsyncError(async (req, res, next) => {
   req.body.slug = slugify(req.body.title);
@@ -10,17 +12,24 @@ const createProduct = catchAsyncError(async (req, res, next) => {
   let added = await results.save();
   res.status(201).json({ message: "added", added });
 });
+// skip... limit
 
 const getAllProducts = catchAsyncError(async (req, res, next) => {
-  let results = await ProductModel.find({});
-  res.json({ message: "Done", results });
+ 
+let apiFeature = new ApiFeatures(ProductModel.find(), req.query)
+.pagination().sort().fields()
+ 
+  let results = await apiFeature.mongooseQuery;
+
+  res.json({ message: "The all products are:", page:apiFeature.page, results });
 });
 
 const getProductById = catchAsyncError(async (req, res, next) => {
   let { id } = req.params;
-  let results = await ProductModel.findById(id);
-  if (results) return res.json({ message: "Done", results });
-  res.json({ message: "product doesn't exist" });
+  let results = await productModel.findById(id);
+  !results && next(new AppError("Product not found", 404));
+  results &&
+    res.json({ message: "The Product that you look for is:", results });
 });
 
 const updateProduct = catchAsyncError(async (req, res, next) => {
@@ -49,3 +58,27 @@ export {
   updateProduct,
   deleteProduct,
 };
+
+/**
+ * notes: l'operateur de comparaison(query)
+ * eq => equal
+ * ne => not equal
+ * gt => greater than
+ * gte => greater than or equal
+ * lt => less than
+ * lte => less than or equal
+ * in => include
+ * nin => not include
+ * example:
+ * const courses = await course.find({price:{$gte:100, $lte:200 } } )
+ * const courses = await course.find({price:{$in: [10, 20, 50] } } )
+ *
+ * notes: l'operateur logique(query)
+ * .and([{student:"amin"}])
+ * .or
+ * .select([ispublished: 1])
+ * only on sql: .like
+ * in nosql regex
+ */
+
+

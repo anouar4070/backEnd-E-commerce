@@ -3,6 +3,7 @@ import slugify from "slugify";
 import AppError from "../../utils/AppError.js";
 import { catchAsyncError } from "../../middleware/catchAsyncError.js";
 import deleteOne from "../../utils/handlers/refactor.handler.js";
+import ApiFeatures from "../../utils/APIFeatures.js";
 
 const createSubCategory = catchAsyncError(async (req, res, next) => {
   let { name, categoryId } = req.body;
@@ -16,17 +17,22 @@ const createSubCategory = catchAsyncError(async (req, res, next) => {
 });
 
 const getAllSubCategories = catchAsyncError(async (req, res, next) => {
-  console.log("hello from get All subCategory", req.params);
-  let filters = {};
-  if (req.params && req.params.id) {
-    filters = {
-      category: req.params.id,
-    };
-  }
+  let apiFeature = new ApiFeatures(subCategoryModel.find(), req.query)
+  .pagination().sort().fields()
+let results = await apiFeature.mongooseQuery;
+res.json({ message: "The all subCategories are:", page:apiFeature.page, results });
 
-  let results = await subCategoryModel.find(filters).populate("category");
+  // console.log("hello from get All subCategory", req.params);
+  // let filters = {};
+  // if (req.params && req.params.id) {
+  //   filters = {
+  //     category: req.params.id,
+  //   };
+  // }
 
-  res.json({ message: "Done", results });
+  // let results = await subCategoryModel.find(filters).populate("category");
+
+  // res.json({ message: "Done", results });
 });
 
 const getSubCategoryById = catchAsyncError(async (req, res, next) => {
