@@ -18,5 +18,5 @@ export const validation = (schema) => {
 /**
  * req.body {name: "anouar"}
  * req.params {id: 21321231}
- * req.query 
+ * req.query  {test: "pingu"}
  */
