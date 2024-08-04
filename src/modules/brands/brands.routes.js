@@ -14,7 +14,7 @@ brandRouter
 brandRouter
   .route("/:id")
   .get(brandController.getBrandById)
-  .put(validation(updateBrandSchema), brandController.updateBrand)
+  .put(uploadSingleFile('brand', 'logo'), validation(updateBrandSchema), brandController.updateBrand)
   .delete(validation(deleteBrandSchema), brandController.deleteBrand);
 
 export default brandRouter;

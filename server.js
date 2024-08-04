@@ -14,6 +14,7 @@ const port = 3000;
 dotenv.config();
 
 app.use(express.json());
+//Parses incoming URL-encoded request bodies, making their data accessible as req.body objects within Express.js routes.
 app.use(express.urlencoded({extended: true}))
 
 app.use(morgan('dev'))
