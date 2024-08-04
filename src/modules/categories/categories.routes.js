@@ -7,14 +7,14 @@ import {
   createCategorySchema,
 } from "./categories.validator.js";
 const categoryRouter = express.Router();
-import multer from "multer";
+import multer from "multer"; // Import Multer for file upload handling
 import AppError from "../../utils/AppError.js";
 
 // categoryRouter.get("/", categoryController.getAllCategories )
 // categoryRouter.post("/", categoryController.createCategory )
 
 categoryRouter.use("/:id/subCategory", subCategoryRouter);
-
+//* use of multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     // Define the directory where uploaded files will be saved
