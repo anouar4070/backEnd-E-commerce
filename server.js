@@ -14,11 +14,14 @@ const port = 3000;
 dotenv.config();
 
 app.use(express.json());
+app.use(express.urlencoded({extended: true}))
+
 app.use(morgan('dev'))
 app.use("/api/v1/category", categoryRouter )
 app.use("/api/v1/subcategory", subCategoryRouter )
 app.use("/api/v1/brand", brandRouter )
 app.use("/api/v1/product", productRouter )
+
 
 
 //* Route not found:

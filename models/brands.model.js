@@ -13,10 +13,7 @@ const brandSchema = new Schema({
 type: String,
 lowercase: true,
   },
-  logo: {
-    type: String,
-   
-      } 
+  logo: String,
    
 
 }, { timestamps: true }); 
