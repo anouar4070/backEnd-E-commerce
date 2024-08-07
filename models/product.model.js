@@ -55,10 +55,9 @@ const productSchema = new Schema(
     },
     
     imgCover: String,
-    images: {
-      type: [String], // Array of image URLs
-      // trim: true,
-    },
+    images:  [String], // Array of image URLs
+    
+    
     // discount: { 
     //   type: mongoose.Schema.Types.ObjectId,
     //   ref: "discount", 
@@ -87,5 +86,15 @@ const productSchema = new Schema(
   },
   { timestamps: true }
 );
+
+
+productSchema.post("init", (doc) => {
+  console.log(doc);
+  doc.imgCover = process.env.BASE_URL+"product/"+ doc.imgCover;
+  doc.images = doc.images.map((path) => {
+    process.env.BASE_URL+"product/"+ path ;
+  }
+  )
+});
 
 export const ProductModel = mongoose.model("Product", productSchema);

@@ -12,6 +12,7 @@ import productRouter from './src/modules/Product/product.routes.js';
 const app = express();
 const port = 3000;
 dotenv.config();
+app.use(express.static("uploads"));
 
 app.use(express.json());
 //Parses incoming URL-encoded request bodies, making their data accessible as req.body objects within Express.js routes.

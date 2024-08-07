@@ -8,10 +8,19 @@ import ApiFeatures from "../../utils/APIFeatures.js";
 
 const createProduct = catchAsyncError(async (req, res, next) => {
   req.body.slug = slugify(req.body.title);
+  
+  req.body.imgCover = req.files.imgCover[0].filename;
+  req.body.images = req.files.images.map((elm) => {
+    elm.filename
+    }
+  );
+  console.log(req.files);
+
   let results = new ProductModel(req.body);
   let added = await results.save();
   res.status(201).json({ message: "added", added });
 });
+
 // skip... limit
 
 const getAllProducts = catchAsyncError(async (req, res, next) => {

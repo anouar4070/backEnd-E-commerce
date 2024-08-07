@@ -18,4 +18,10 @@ lowercase: true,
 
 }, { timestamps: true }); 
 
+  // Construct the Brand Logo URL:
+brandSchema.post("init", (doc) => {
+  console.log(doc);
+  doc.logo = process.env.BASE_URL+"brand/"+ doc.logo;
+});
+
 export const BrandModel = mongoose.model("brand", brandSchema);

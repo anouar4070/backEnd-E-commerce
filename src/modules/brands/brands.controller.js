@@ -7,7 +7,7 @@ import ApiFeatures from "../../utils/APIFeatures.js";
 
 const createBrand = catchAsyncError(async (req, res, next) => {
   req.body.slug = slugify(req.body.name);
-  req.body.logo = req.file.fileName;
+  req.body.logo = req.file.filename;
 
   // let { name } = req.body;
   let results = new BrandModel(req.body);
@@ -38,7 +38,7 @@ const getBrandById = catchAsyncError(async (req, res, next) => {
 const updateBrand = catchAsyncError(async (req, res, next) => {
   let { id } = req.params;
   req.body.slug = slugify(req.body.name);
-  if (req.file) req.body.logo = req.file.fileName;
+  if (req.file) req.body.logo = req.file.filename;
 
   let results = await BrandModel.findByIdAndUpdate(id, req.body, { new: true });
   // res.json({ message: "Done", results });

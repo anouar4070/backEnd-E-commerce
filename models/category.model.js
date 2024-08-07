@@ -21,4 +21,9 @@ const categorySchema = new Schema(
   { timestamps: true }
 ); // Add timestamps for automatic creation/update tracking
 
+// Construct the category Logo URL:
+categorySchema.post("init", (doc) => {
+  console.log(doc);
+  doc.image = process.env.BASE_URL+"category/"+ doc.image;
+});
 export const CategoryModel = model("category", categorySchema);
