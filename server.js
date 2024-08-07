@@ -12,6 +12,7 @@ import productRouter from './src/modules/Product/product.routes.js';
 const app = express();
 const port = 3000;
 dotenv.config();
+// any files located in the "uploads" directory can be accessed directly via a URL
 app.use(express.static("uploads"));
 
 app.use(express.json());
